@@ -39,19 +39,18 @@
   │   0  0  1  0  0
   └────
 
-
+![Ejercicio de Kernel de Combolucion ](Kernel_Comb2.jpg)
 ### 2.0.1 Tareas
 
-  1. Con *stride = 1* y *padding valid* (sin relleno), ¿cuál es el
-     tamaño del mapa de salida?
-  2. Calcula *solo* el valor de la esquina superior izquierda del mapa
-     (la primera posición del filtro). Muestra la suma de productos.
-  3. ¿Este kernel parece detectar bordes *verticales* u *horizontales*?
-     Justifica mirando los signos.
+ ##### 1. Con *stride = 1* y *padding valid* (sin relleno), ¿cuál es el tamaño del mapa de salida?
+      5x5
+ ##### 3. Calcula *solo* el valor de la esquina superior izquierda del mapa (la primera posición del filtro). Muestra la suma de productos.
+ (0*0)+(0*0)+(0*0)+(0*0)+(0*0)+(0*-1)+(0*0)+(0*0)+(1*-1)=0+0+0+0+0-0+0+0-1=-1
+     
+#####  4. ¿Este kernel parece detectar bordes *verticales* u *horizontales*? Justifica mirando los signos.
 
 
-3 Pregunta 2 — Contar pesos
-═══════════════════════════
+### 3 Pregunta 2 — Contar pesos
 
   Una imagen RGB de *28×28×3*. Compara dos modelos:
 
@@ -63,18 +62,19 @@
     filtro).
 
 
-3.0.1 Tareas
-╌╌╌╌╌╌╌╌╌╌╌╌
+#### 3.0.1 Tareas
+ ##### 1. ¿Cuántos pesos tiene la capa densa del Modelo A? (fórmula y número)
 
-  1. ¿Cuántos pesos tiene la capa densa del Modelo A? (fórmula y número)
-  2. ¿Cuántos parámetros tiene la Conv2D del Modelo B? (pesos de kernels
-     + biases)
-  3. En *una frase*: ¿por qué la CNN suele generalizar mejor con el
-     mismo número de imágenes de entrenamiento?
+ 
+ ##### 2. ¿Cuántos parámetros tiene la Conv2D del Modelo B? (pesos de kernels + biases)
+
+ 
+ ##### 3. En *una frase*: ¿por qué la CNN suele generalizar mejor con el  mismo número de imágenes de entrenamiento?
+ La CNN suele generalizar mejor con el mismo numero de imágenes de entrenamiento ya que va comparando cosa por cosa, imagen por imagen hasta que compara todos los datos con todos.  
 
 
-4 Pregunta 3 — ¿Qué cambia si meto más capas?
-═════════════════════════════════════════════
+
+### 4 Pregunta 3 — ¿Qué cambia si meto más capas?
 
   Parte del notebook `CNNriesgo' (simplificado):
 
@@ -92,42 +92,32 @@
   └────
 
 
-4.0.1 Tareas
-╌╌╌╌╌╌╌╌╌╌╌╌
+#### 4.0.1 Tareas
 
-  1. Tras el *primer* MaxPool(2×2) con padding same sobre 21×28, ¿qué
-     tamaño aproximado (alto×ancho) esperas? (puedes redondear / usar la
-     regla “casi la mitad”)
-  2. ¿Qué *significan* ahora los 64 filtros de la segunda Conv2D:
-     detectan bordes “crudos” o patrones *más compuestos*? Explica con
-     la analogía de la lupa / capas abstractas.
-  3. Riesgo: si añades *muchas* capas Conv+Pool con pocas imágenes, ¿qué
-     falla típico verías en las curvas train vs validation? ¿Qué harías
-     primero para mitigarlo (Dropout, más datos, menos filtros…)? Elige
-     *una* medida y justifica.
+  ##### 1. Tras el *primer* MaxPool(2×2) con padding same sobre 21×28, ¿qué tamaño aproximado (alto×ancho) esperas? (puedes redondear / usar la regla “casi la mitad”)
+  Se espera que el tamaño aproximado sea de su mismo tamaño del paddig same 
+  ##### 2. ¿Qué *significan* ahora los 64 filtros de la segunda Conv2D: detectan bordes “crudos” o patrones *más compuestos*? Explica con la analogía de la lupa / capas abstractas.
+  
+  ##### 3. Riesgo: si añades *muchas* capas Conv+Pool con pocas imágenes, ¿qué falla típico verías en las curvas train vs validation? ¿Qué harías primero para mitigarlo (Dropout, más datos, menos filtros…)? Elige *una* medida y justifica.
 
 
-5 Pregunta 4 — Formas: de volumen a vector
-══════════════════════════════════════════
+### 5 Pregunta 4 — Formas: de volumen a vector
 
   Supón que, justo antes del Flatten, el tensor tiene forma `(7, 7, 64)'
   (lote omitido: una sola imagen).
 
 
-5.0.1 Tareas
-╌╌╌╌╌╌╌╌╌╌╌╌
+#### 5.0.1 Tareas
 
-  1. ¿Cuántos números salen del Flatten? (un solo entero)
-  2. Si la siguiente Dense tiene *32 neuronas* (con bias), ¿cuántos
-     parámetros tiene *esa* Dense?
-  3. Si en vez de Flatten usas *Global Average Pooling* (un promedio por
-     canal), ¿qué forma tendrías a la salida y cuántos valores serían?
-     ¿Ventaja frente a Flatten cuando la imagen de entrada es más
-     grande?
+ ##### 1. ¿Cuántos números salen del Flatten? (un solo entero)
+ 3
+ ##### 2. Si la siguiente Dense tiene *32 neuronas* (con bias), ¿cuántos parámetros tiene *esa* Dense?
+ Tendria 3 parametros
+#####  3. Si en vez de Flatten usas *Global Average Pooling* (un promedio por  canal), ¿qué forma tendrías a la salida y cuántos valores serían?  ¿Ventaja frente a Flatten cuando la imagen de entrada es más   grande?
 
 
-6 Pregunta 5 — Softmax y el error “casi seguro”
-═══════════════════════════════════════════════
+### Pregunta 5 — Softmax y el error “casi seguro”
+
 
   Una CNN de 3 clases (inundación, incendio, tornado) saca logits que,
   tras softmax, dan:
@@ -139,16 +129,15 @@
   La etiqueta verdadera (one-hot) es `[0, 1, 0]' (incendio).
 
 
-6.0.1 Tareas
-╌╌╌╌╌╌╌╌╌╌╌╌
+#### 6.0.1 Tareas
 
-  1. ¿Qué clase predice el modelo (`argmax')?
-  2. ¿Está “seguro” o “confundido”? Usa los números, no adjetivos
-     vacíos.
-  3. Sin calcular la fórmula exacta: argumenta si la *categorical
-     crossentropy* de este ejemplo será *alta* o *baja*, y por qué
-     (pista: castiga cuando la probabilidad de la clase correcta es
-     pequeña).
+#####  1. ¿Qué clase predice el modelo (`argmax')?
+
+ ##### 2. ¿Está “seguro” o “confundido”? Usa los números, no adjetivos vacíos.
+
+ 
+ ##### 3. Sin calcular la fórmula exacta: argumenta si la *categorical crossentropy* de este ejemplo será *alta* o *baja*, y por qué   (pista: castiga cuando la probabilidad de la clase correcta es pequeña).
+
 
 
 7 Pregunta 6 — Padding, stride y “se me achicó la imagen”
@@ -229,23 +218,23 @@
   invariancia…)
 
 
-11 Pregunta 10 — Experimento mental: mover un gato
-══════════════════════════════════════════════════
+### 11 Pregunta 10 — Experimento mental: mover un gato
+
 
   Entrenaste una CNN que detecta “hay un gato” en fotos 64×64. En el
   test, el mismo gato aparece *corrido 10 píxeles a la derecha*, mismo
   fondo, misma escala.
 
 
-11.0.1 Tareas
+#### 11.0.1 Tareas
 ╌╌╌╌╌╌╌╌╌╌╌╌╌
 
-  1. ¿Por qué una CNN tiene *más chance* de seguir acertando que un MLP
-     que ve el vector aplastado? (pesos compartidos / detección local)
-  2. Si en vez de correrlo lo *giraras 90°* y nunca viste gatos de lado
+#####  1. ¿Por qué una CNN tiene *más chance* de seguir acertando que un MLP que ve el vector aplastado? (pesos compartidos / detección local
+La CNN aprende con más precisión basándose en todos los datos del dataset que se proporciona, al mostrar el dataset no solo aprende de un solo movimiento o una sola posición, si no que va observando muy precisamente las caracterristicas del objeto que se quiere identificar sin importar en que locación se encuentre o que fondo tiene .
+#####  2. Si en vez de correrlo lo *giraras 90°* y nunca viste gatos de lado
      en el train, ¿la CNN “mágica” garantiza acierto? ¿Qué haría falta
      (augmentation, más datos…)?
-  3. Escribe *una* pregunta que tú le harías a un compañero para
+ ##### 3. Escribe *una* pregunta que tú le harías a un compañero para
      comprobar si entendió qué son los *pesos del kernel* (no copies las
      de arriba).
 
